@@ -2,9 +2,12 @@ package com.pillow;
 
 public class Main {
     public static void main(String args[]) throws Exception {
-        int[] nums = new int[] {
-                2,1,3,2,4
-        };
-        System.out.println(IncreasingTripletSubsequence.increasingTriplet(nums));
+        TreeNode r = new TreeNode(3);
+        r.left = new TreeNode(0);
+        r.right = new TreeNode(4);
+        r.left.right = new TreeNode(2);
+        r.left.right.left = new TreeNode(1);
+        r = TrimBSTree.trimBST(r, 1, 3);
+        System.out.println(r);
     }
 }
