@@ -2,12 +2,11 @@ package com.pillow;
 
 public class Main {
     public static void main(String args[]) throws Exception {
-        TreeNode r = new TreeNode(3);
-        r.left = new TreeNode(0);
-        r.right = new TreeNode(4);
-        r.left.right = new TreeNode(2);
-        r.left.right.left = new TreeNode(1);
-        r = TrimBSTree.trimBST(r, 1, 3);
-        System.out.println(r);
+        int[] a = { 3, 2, 1, 5, 6, 4 };
+        System.out.println(KthLargestNum.findKthLargest(a, 1));
+        int[] b = { -1,2,0};
+        System.out.println(KthLargestNum.findKthLargest(b, 3));
+        int[] c = { 3,1,2,4};
+        System.out.println(KthLargestNum.findKthLargest(c, 2));
     }
 }
