@@ -2,11 +2,17 @@ package com.pillow;
 
 public class Main {
     public static void main(String args[]) throws Exception {
-        int[] a = { 3, 2, 1, 5, 6, 4 };
-        System.out.println(KthLargestNum.findKthLargest(a, 1));
-        int[] b = { -1,2,0};
-        System.out.println(KthLargestNum.findKthLargest(b, 3));
-        int[] c = { 3,1,2,4};
-        System.out.println(KthLargestNum.findKthLargest(c, 2));
+        int[] nums = new int[]
+//                {1,3,5,4,7};
+//                {2,2,2,2,2};
+//        {5,5,5,4,5,6};
+//                {8,13,9,14};
+//                {8,13,9,14,15,1,2,3,4};
+//                {10, 9, 2, 5, 3, 7, 101, 18};
+//                {1,3,6,7,9,4,10,5,6};
+//                {1,1,1,2,2,2,3,3,3};
+                {1};
+        int res = NumOfLIS.findNumberOfLIS(nums);
+        System.out.println(res);
     }
 }
