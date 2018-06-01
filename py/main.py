@@ -1,12 +1,12 @@
-from SortedArrToBST import Solution
+from Permutations import Solution
 
 
 def main():
-    # nums = [2, 3, 4, 5, 6]
-    nums = [0]
+    nums = [1,2,3]
     s = Solution()
-    tn = s.sortedArrayToBST(nums)
-    print tn
+    tn = s.permute(nums)
+    print(tn)
+
 
 if __name__ == '__main__':
     main()

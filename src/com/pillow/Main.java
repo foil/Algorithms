@@ -1,17 +1,12 @@
 package com.pillow;
 
+import java.util.List;
+
 public class Main {
     public static void main(String args[]) throws Exception {
-        MinStack obj = new MinStack();
-        obj.push(-2);
-        obj.push(0);
-        obj.push(-3);
-        int a = obj.getMin();
-        System.out.println(a);
-        obj.pop();
-        a = obj.top();
-        System.out.println(a);
-        a = obj.getMin();
-        System.out.println(a);
+        Permutations permutations = new Permutations();
+        int[] arr = new int[] {1,2,3};
+        List<List<Integer>> res = permutations.permute(arr);
+        System.out.print(res);
     }
 }
