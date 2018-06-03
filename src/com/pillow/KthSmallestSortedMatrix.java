@@ -1,52 +1,50 @@
 package com.pillow;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class KthSmallestSortedMatrix {
+    class Coordinate {
+        int x, y;
+        Coordinate(int x, int y) {
+            this.x = x;
+            this.y = y;
+        }
+    }
+
     public int kthSmallest(int[][] matrix, int k) {
-        int x1 = 0, y1 = 0;
-        int x2 = 0, y2 = 0;
-        int x = 0, y = 0, n = 0;
-        while (x1 < matrix.length && y1 < matrix.length &&
-                x2 < matrix.length && y2 < matrix.length) {
-            System.out.println("[" + y1 + "][" + x1 + "]:" + matrix[y1][x1] +
-                    "; [" + y2 + "][" + x2 + "]:" + matrix[y2][x2]);
-            if (x1 == x2 && y1 == y2) {
-                x = x1; y = y1;
-                x1 ++;
-                y2 ++;
-                n ++;
-            } else {
-                if (matrix[y1][x1] < matrix[y2][x2]) {
-                    x = x1;
-                    y = y1;
-                    x1 ++;
-                    n ++;
-                } else if (matrix[y1][x1] > matrix[y2][x2]) {
-                    x = x2; y = y2;
-                    y2 ++;
-                    n ++;
-                } else {
-                    x = x1; y = y1;
-                    x1 ++; y2 ++;
-                    n += 2;
+        List<Coordinate> corners = new ArrayList<>();
+        corners.add(new Coordinate(0,0));
+        int curVal = matrix[0][0];
+        while (k-- > 0) {
+            int min = Integer.MAX_VALUE;
+            Coordinate curCorner = corners.get(0);
+            for (Coordinate coord: corners) {
+                if (matrix[coord.y][coord.x] < min) {
+                    min = matrix[coord.y][coord.x];
+                    curCorner = coord;
                 }
             }
-            if (x1 == matrix.length) {
-                y1++;
-            }
-            if (y2 == matrix.length) {
-                x2++;
-            }
-            if (x1 == matrix.length) {
-                x1 = x2 + 1;
-            }
-            if (y2 == matrix.length) {
-                y2 = y1 + 1;
-            }
 
-            System.out.println(matrix[y][x]);
-            if (n >= k)
-                return matrix[y][x];
+            curVal = min;
+            corners.remove(curCorner);
+            Coordinate curRight = null;
+            Coordinate curDown = null;
+            if (curCorner.x < matrix.length - 1)
+                curRight = new Coordinate(curCorner.x + 1, curCorner.y);
+            if (curCorner.y < matrix.length - 1)
+                curDown = new Coordinate(curCorner.x, curCorner.y + 1);
+            for (Coordinate coord: corners) {
+                if (curRight != null && (coord.x == curRight.x && coord.y < curRight.y))
+                    curRight = null;
+                if (curDown != null && (coord.y == curDown.y && coord.x < curDown.x))
+                    curDown = null;
+            }
+            if (curRight != null)
+                corners.add(curRight);
+            if (curDown != null)
+                corners.add(curDown);
         }
-        return matrix[matrix.length - 1][matrix.length - 1];
+        return curVal;
     }
 }
