@@ -2,19 +2,9 @@ package com.pillow;
 
 public class Main {
     public static void main(String args[]) throws Exception {
-        KthSmallestSortedMatrix kthSmallestSortedMatrix = new KthSmallestSortedMatrix();
-        int[][] basicMatrix = new int[][] {
-                {1,  5,  9},
-                {10, 11, 13},
-                {12, 13, 15}
-        };
-        int[][] matrix = new int[][] {
-                {1,  4,  7,  11,  15},
-                {2,  5,  8,  12,  19},
-                {3,  6,  9,  16,  22},
-                {10, 13, 14, 17,  24},
-                {18, 21, 23, 26,  30}
-        };
-        System.out.print(kthSmallestSortedMatrix.kthSmallest(matrix, 6));
+        MedianSortedArrays medianSortedArrays = new MedianSortedArrays();
+        int [] nums1 = new int[] {1,3};
+        int[] nums2 = new int[] {2,6};
+        System.out.println(medianSortedArrays.findMedianSortedArrays(nums1, nums2));
     }
 }
