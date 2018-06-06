@@ -1,11 +1,10 @@
-from Permutations import Solution
+from PalindromeNumber import Solution
 
 
 def main():
-    nums = [1,2,3]
+    nums = 101
     s = Solution()
-    tn = s.permute(nums)
-    print(tn)
+    print(s.isPalindrome(nums))
 
 
 if __name__ == '__main__':
