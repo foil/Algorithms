@@ -1,10 +1,12 @@
-from PalindromeNumber import Solution
+from AddTwoNumbers import Solution, ListNode
 
 
 def main():
-    nums = 101
+    l1 = ListNode(1)
+    l2 = ListNode(9)
+    l2.next = ListNode(9)
     s = Solution()
-    print(s.isPalindrome(nums))
+    print(s.addTwoNumbers(l1, l2))
 
 
 if __name__ == '__main__':
