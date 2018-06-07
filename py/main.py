@@ -1,12 +1,9 @@
-from AddTwoNumbers import Solution, ListNode
+from MaxSubstrNoRepeating import Solution
 
 
 def main():
-    l1 = ListNode(1)
-    l2 = ListNode(9)
-    l2.next = ListNode(9)
     s = Solution()
-    print(s.addTwoNumbers(l1, l2))
+    print(s.lengthOfLongestSubstring("pwwkew"))
 
 
 if __name__ == '__main__':
