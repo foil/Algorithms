@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
+import java.util.HashMap;
 
 public class KDisInBTree {
-    private int targetDepth = -1;
-    private TreeNode target = null;
-
     void DFS(TreeNode root, int depth, List<Integer> result) {
+        if (root == null)
+            return;
         if (depth == 0) {
             result.add(root.val);
         } else {
@@ -18,40 +18,52 @@ public class KDisInBTree {
         }
     }
 
-    private void DFS2(TreeNode root, int depth, List<List<TreeNode>> nodes) {
-        if (root == null)
-            return;
-        if (nodes.size() <= depth)
-            nodes.add(new ArrayList<>());
-        List<TreeNode> l = nodes.get(depth);
-        l.add(root);
-        if (root == target)
-            targetDepth = depth;
-
-        if (targetDepth >= 0 && depth <= targetDepth) {
-            DFS2(root.left, depth + 1, nodes);
-            DFS2(root.right, depth + 1, nodes);
+    List<TreeNode> criticalPath(TreeNode curRoot, TreeNode target, List<TreeNode> nodes) {
+        if (curRoot == null)
+            return null;
+        nodes.add(curRoot);
+        if (curRoot == target) {
+            //  found it
+            return nodes;
         }
-
+        List<TreeNode> l = criticalPath(curRoot.left, target, new ArrayList<>(nodes));
+        if (l != null)
+            return l;
+        return criticalPath(curRoot.right, target, nodes);
     }
+
     public List<Integer> distanceK(TreeNode root, TreeNode target, int K) {
-        TreeNode tr = target;
-        List<Integer> result = new ArrayList<>();
-        DFS(tr, K, result);
+        //  1 find out the path from root to target
+        List<TreeNode> path = new ArrayList<>();
+        path = criticalPath(root, target, path);
 
-        this.target = target;
-        tr = root;
-        List<List<TreeNode>> nodes = new ArrayList<>();
-        DFS2(tr, 0, nodes);
+        //  2 replace each node in the path with its sibling
+        Map<TreeNode, Integer> map = new HashMap<>();
+        for (int i = 0; i < path.size(); i ++) {
+            TreeNode parent = path.get(i);
+            if (parent == target)
+                map.put(parent, K);
+            else if (K + i == path.size() - 1)
+                map.put(parent, 0);
 
-        int sz = nodes.size();
-        List<TreeNode> aboves = null;
-        if (sz >= K)
-            aboves = nodes.get(K);
-        else
-        for (int i = 0; i < nodes.size(); i ++) {
-
+            int depth = K + i - path.size();
+            if (i == path.size() - 1 || depth < 0)
+                continue;
+            TreeNode child = path.get(i + 1);
+            if (parent.left == child)
+                map.put(parent.right, depth);
+            else
+                map.put(parent.left, depth);
         }
-        return null;
+
+        //  3 dfs all relevant nodes
+        List<Integer> result = new ArrayList<>();
+        for (Map.Entry<TreeNode, Integer> entry : map.entrySet()) {
+            TreeNode node = entry.getKey();
+            int depth = entry.getValue();
+            DFS(node, depth, result);
+        }
+
+        return result;
     }
 }
