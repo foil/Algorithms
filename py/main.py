@@ -1,9 +1,10 @@
-from ZigzagConversion import Solution
+from AllPathsToTarget import Solution
 
 
 def main():
     s = Solution()
-    print(s.convert("PAYPALISHIRING", 3))
+    arrs = [[1,2], [3], [3], []]
+    print(s.allPathsSourceTarget(arrs))
 
 
 if __name__ == '__main__':
