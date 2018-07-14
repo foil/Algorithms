@@ -1,10 +1,13 @@
-from AllPathsToTarget import Solution
+from EvaluationDivision import Solution
 
 
 def main():
     s = Solution()
-    arrs = [[1,2], [3], [3], []]
-    print(s.allPathsSourceTarget(arrs))
+    equations = [ ["a", "b"], ["b", "c"] ]
+    values = [2.0, 3.0]
+    queries = [ ["a", "c"], ["b", "c"], ["a", "e"], ["a", "a"], ["x", "x"] ]
+
+    print(s.calcEquation(equations, values, queries))
 
 
 if __name__ == '__main__':

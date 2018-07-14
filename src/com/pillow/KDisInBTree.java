@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 import java.util.HashMap;
+import java.util.Map;
 
 public class KDisInBTree {
     void DFS(TreeNode root, int depth, List<Integer> result) {
