@@ -1,14 +1,14 @@
-from EvaluationDivision import Solution
+from InorderIteratively import Solution
+from TreeNode import TreeNode
 
 
 def main():
     s = Solution()
-    equations = [ ["a", "b"], ["b", "c"] ]
-    values = [2.0, 3.0]
-    queries = [ ["a", "c"], ["b", "c"], ["a", "e"], ["a", "a"], ["x", "x"] ]
 
-    print(s.calcEquation(equations, values, queries))
-
+    root = TreeNode(2)
+    root.left = TreeNode(3)
+    root.left.left = TreeNode(1)
+    print(s.inorderTraversal(root))
 
 if __name__ == '__main__':
     main()
