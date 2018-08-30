@@ -1,17 +1,56 @@
 package com.pillow;
 
 public class Main {
-    public static void main(String args[]) throws Exception {
-        MinRefuelingStops s = new MinRefuelingStops();
-//        int target = 100, startFuel = 10;
-//        int [][]stations = new int[][] {new int[]{10,60}, new int[]{20,30}, new int[]{30,30}, new int[]{60,40}};
-//        int target = 100, startFuel = 25;
-//        int [][]stations = new int[][] {new int[]{25,25},new int[]{50,25},new int[]{75,25}};
-        int target = 1000, startFuel = 83;
-        int [][]stations = new int[][] {new int[]{25,27},new int[]{36,187},new int[]{140,186},new int[]{378,6},new int[]{492,202},
-                            new int[]{517,89},new int[]{579,234},new int[]{673,86},new int[]{808,53},new int[]{954,49}};
+    static void swap(int i, int j, int[] na) {
+        int t = na[i];
+        na[i] = na[j];
+        na[j] = t;
+    }
 
-        int n = s.minRefuelStops(target, startFuel, stations);
-        System.out.println(n);
+    static void quickSort(int l, int h, int[] A) {
+        if (l < h) {
+            int p = partition(A, l, h);
+            quickSort(p + 1, h, A);
+            quickSort(l, p - 1, A);
+        }
+    }
+    static int partition(int[] A, int l, int h) {
+        int i = l;
+        int pivot = A[h];
+        for (int j = i; j < h; j ++) {
+            if (A[j] < pivot) {
+                swap(i, j, A);
+                i ++;
+            }
+        }
+        swap(i, h, A);
+        return i;
+    }
+
+    static String countAndSay(int n) {
+        String cur = "1";
+        for (int i = 2; i <= n; i ++) {
+            String tmp = "";
+            char c = cur.charAt(0);
+            int m = 1;
+            for (int k = 1; k < cur.length(); k ++) {
+                if (cur.charAt(k) == c)
+                    m++;
+                else {
+                    tmp += m;
+                    tmp += c;
+                    c = cur.charAt(k);
+                    m = 1;
+                }
+            }
+            tmp += m;
+            tmp += c;
+            cur = tmp;
+        }
+        return cur;
+    }
+
+    public static void main(String args[]) throws Exception {
+        System.out.println(countAndSay(4));
     }
 }
