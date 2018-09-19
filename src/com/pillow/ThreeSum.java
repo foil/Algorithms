@@ -6,33 +6,34 @@ import java.util.Arrays;
 class ThreeSum {
     public List<List<Integer>> threeSum(int[] nums) {
         List<List<Integer>> res = new ArrayList<>();
-        if (nums.length < 3)
+        int L = nums.length;
+        if (L < 3)
             return res;
 
         Arrays.sort(nums);
-        int s = 0, e = nums.length - 1;
-        while (s < e - 1) {
-            int i = this.bsearch(s + 1, e - 1, nums, -(nums[s] + nums[e]));
-            int sum = nums[s] + nums[i] + nums[e];
-            if (sum == 0) {
-                boolean seen = false;
-                for (List<Integer> l : res) {
-                    if (l.get(0) == nums[s] && l.get(1) == nums[i] && l.get(2) == nums[e]) {
-                        seen = true;
-                        break;
+
+        for (int i = 0; i < L - 2; i ++) {
+            int last = i;
+            for (int k = L - 1; k >= i + 2; k --) {
+                int j = bsearch(last + 1, k - 1, nums, -(nums[i] + nums[k]));
+                if (j > 0) {
+                    last = j;
+                    if (!hasSeen(nums[i], nums[j], nums[k], res)) {
+                        List<Integer> l = new ArrayList<>(Arrays.asList(nums[i], nums[j], nums[k]));
+                        res.add(l);
                     }
                 }
-                if (!seen) {
-                    List<Integer> l = new ArrayList<>(Arrays.asList(nums[s], nums[i], nums[e]));
-                    res.add(l);
-                }
-                s ++;
-            } else if (sum < 0)
-                s ++;
-            else
-                e --;
+            }
         }
+
         return res;
+    }
+
+    private static boolean hasSeen(int i, int j, int k, List<List<Integer>> l) {
+        for (List<Integer> ll: l)
+            if (ll.get(0) == i && ll.get(1) == j && ll.get(2) == k) 
+                return true;
+        return false;
     }
 
     private static int bsearch(int s, int e, int[] A, int T) {
@@ -40,12 +41,8 @@ class ThreeSum {
             int m = (s + e) / 2;
             if (A[m] > T) {
                 e = m - 1;
-                if (e < s)
-                    return s;
             } else if (A[m] < T) {
                 s = m + 1;
-                if (s > e)
-                    return e;
             } else
                 return m;
         }
