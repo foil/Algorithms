@@ -1,4 +1,6 @@
 package com.pillow;
+import java.util.List;
+import java.util.LinkedList;
 
 public class Main {
     static void swap(int i, int j, int[] na) {
@@ -27,30 +29,40 @@ public class Main {
         return i;
     }
 
-    static String countAndSay(int n) {
-        String cur = "1";
-        for (int i = 2; i <= n; i ++) {
-            String tmp = "";
-            char c = cur.charAt(0);
-            int m = 1;
-            for (int k = 1; k < cur.length(); k ++) {
-                if (cur.charAt(k) == c)
-                    m++;
-                else {
-                    tmp += m;
-                    tmp += c;
-                    c = cur.charAt(k);
-                    m = 1;
+    static ListNode mergeKLists(ListNode[] lists) {
+        int K = lists.length;
+        ListNode res = new ListNode(0);
+        ListNode p = res;
+
+        while (true) {
+            boolean hasValue = false;
+            int minVal = 0x7FFFFFFF;
+            int minId = -1;
+            for (int i = 0; i < K; i ++) {
+                ListNode n = lists[i];
+                if (n != null) {
+                    hasValue = true;
+                    if (n.val < minVal) {
+                        minVal = n.val;
+                        minId = i;
+                    }
                 }
             }
-            tmp += m;
-            tmp += c;
-            cur = tmp;
+            if (!hasValue)
+                return res.next;
+            p.next = new ListNode(minVal);
+            p = p.next;
+            lists[minId] = lists[minId].next;
         }
-        return cur;
     }
 
     public static void main(String args[]) throws Exception {
-        System.out.println(countAndSay(4));
+        ListNode[] lists = new ListNode[] {
+            ListNode.create(new int[] {1,4,5}),
+            ListNode.create(new int[] {1,3,4}),
+            ListNode.create(new int[] {2,6})
+        };
+        ListNode res = Main.mergeKLists(lists);
+        System.out.println(res.toString());
     }
 }
