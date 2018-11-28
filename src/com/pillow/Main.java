@@ -1,6 +1,7 @@
 package com.pillow;
 import java.util.List;
 import java.util.LinkedList;
+import java.util.Arrays;
 
 public class Main {
     static void swap(int i, int j, int[] na) {
@@ -56,13 +57,59 @@ public class Main {
         }
     }
 
+    public boolean search(int[] nums, int target) {
+        int i = 0, j = nums.length;
+        while (i < j) {
+            if (nums[i] < nums[j - 1])
+                break;
+            int m = i + (j - i) / 2;
+            if (nums[m] > nums[i]) {
+                i = m + 1;
+                if (i == nums.length - 1)
+                    break;
+            } else if (nums[m] < nums[i])
+                j = m;
+            else
+                i ++;
+        System.out.println(i);
+        }
+
+        return bsearch(nums, 0, i, target) ||
+            bsearch(nums, i, nums.length, target);
+    }
+
+    private boolean bsearch(int[] A, int i, int j, int t) {
+        while (i < j) {
+            int m = i + (j - i) / 2;
+            if (A[m] < t)
+                i = m + 1;
+            else if (A[m] > t)
+                j = m;
+            else
+                return true;
+        }
+        return false;
+    }
+
     public static void main(String args[]) throws Exception {
-        ListNode[] lists = new ListNode[] {
-            ListNode.create(new int[] {1,4,5}),
-            ListNode.create(new int[] {1,3,4}),
-            ListNode.create(new int[] {2,6})
-        };
-        ListNode res = Main.mergeKLists(lists);
-        System.out.println(res.toString());
+        //int[] nums = new int[] {3,1}; int t = 3;
+        //int[] nums = new int[] {3,5,1}; int t = 3;
+        //int[] nums = new int[] {1,3,1,1,1}; int t = 3;
+        //int[] nums = new int[] {1,1,2,2,0,0}; int t = 0;
+
+        //System.out.println(new Main().search(nums, t));
+        int x = 2147483647;
+        for (int i = 1; ; i ++) {
+            long s = (long)i * i;
+            if (x == s) {
+                System.out.println(i);
+                break;
+            }
+            if (x < s) {
+                System.out.println(i - 1);
+                break;
+            }
+        }
+
     }
 }
