@@ -1,8 +1,13 @@
 package com.pillow;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 class Twitter {
-    private map<Integer, List<Integer>> follows;
-    private map<Integer, List<Integer>> userTweets;
+    private Map<Integer, List<Integer>> follows;
+    private Map<Integer, List<Integer>> userTweets;
     private List<Integer> tweets;
 
     /** Initialize your data structure here. */
@@ -35,7 +40,8 @@ class Twitter {
                 }
             }
         } else {
-
+        }
+        return null;
     }
     
     /** Follower follows a followee. If the operation is invalid, it should be a no-op. */

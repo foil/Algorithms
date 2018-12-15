@@ -24,5 +24,14 @@ public class ListNode {
         sb.append("]");
         return sb.toString();
     }
+    public static ListNode fromArray(int[] arr) {
+        ListNode head = new ListNode(0);
+        ListNode p = head;
+        for (int n: arr) {
+            p.next = new ListNode(n);
+            p = p.next;
+        }
+        return head.next;
+    }
 }
 
