@@ -11,17 +11,31 @@ class ThreeSum {
             return res;
 
         Arrays.sort(nums);
+        System.out.println(Arrays.toString(nums));
 
+        Integer dupa = null;
         for (int i = 0; i < L - 2; i ++) {
-            int last = i;
-            for (int k = L - 1; k >= i + 2; k --) {
-                int j = bsearch(last + 1, k - 1, nums, -(nums[i] + nums[k]));
-                if (j > 0) {
-                    last = j;
-                    if (!hasSeen(nums[i], nums[j], nums[k], res)) {
-                        List<Integer> l = new ArrayList<>(Arrays.asList(nums[i], nums[j], nums[k]));
-                        res.add(l);
-                    }
+            int a = nums[i];
+            if (dupa != null && a == dupa.intValue())
+                continue;
+        
+            Integer dupb = null;
+            for (int j = i + 1, k = L - 1; j < k;) {
+                int b = nums[j], c = nums[k];
+                if (dupb != null && b == dupb.intValue()) {
+                    j ++;
+                    continue;
+                }
+
+                if (b + c > -a)
+                    k --;
+                else if (b + c < -a)
+                    j ++;
+                else {
+                    res.add(Arrays.asList(a, b, c));
+                    k --; j ++;
+                    dupa = a;
+                    dupb = b;
                 }
             }
         }
@@ -29,30 +43,12 @@ class ThreeSum {
         return res;
     }
 
-    private static boolean hasSeen(int i, int j, int k, List<List<Integer>> l) {
-        for (List<Integer> ll: l)
-            if (ll.get(0) == i && ll.get(1) == j && ll.get(2) == k) 
-                return true;
-        return false;
-    }
-
-    private static int bsearch(int s, int e, int[] A, int T) {
-        while (s <= e) {
-            int m = (s + e) / 2;
-            if (A[m] > T) {
-                e = m - 1;
-            } else if (A[m] < T) {
-                s = m + 1;
-            } else
-                return m;
-        }
-        return -1;
-    }
-
     public static void main(String[] args) {
         ThreeSum s = new ThreeSum();
         //int[] nums = new int[] {-1, 0, 1, 2, -1, -4};
-        int[] nums = new int[] {-2, 0, 1, 1, 2};
+        //int[] nums = new int[] {-2, 0, 1, 1, 2};
+        //int[] nums = new int[] {-2, 0, 0, 2, 2};
+        int[] nums = new int[] {-4,-2,1,-5,-4,-4,4,-2,0,4,0,-2,3,1,-5,0};
         List<List<Integer>> l = s.threeSum(nums);
         System.out.println(l.toString());
     }
