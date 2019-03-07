@@ -91,25 +91,33 @@ public class Main {
         return false;
     }
 
-    public static void main(String args[]) throws Exception {
-        //int[] nums = new int[] {3,1}; int t = 3;
-        //int[] nums = new int[] {3,5,1}; int t = 3;
-        //int[] nums = new int[] {1,3,1,1,1}; int t = 3;
-        //int[] nums = new int[] {1,1,2,2,0,0}; int t = 0;
-
-        //System.out.println(new Main().search(nums, t));
-        int x = 2147483647;
-        for (int i = 1; ; i ++) {
-            long s = (long)i * i;
-            if (x == s) {
-                System.out.println(i);
-                break;
-            }
-            if (x < s) {
-                System.out.println(i - 1);
-                break;
-            }
+    static ListNode reverse(ListNode head) {
+        ListNode p = head, n = head.next;
+        while (n != null) {
+            ListNode tmp = n.next;
+            n.next = p;
+            p = n;
+            n = tmp;
         }
+        head.next = null;
+        return p;
+    }
 
+    public static void main(String args[]) throws Exception {
+        int[] l = new int[] {1,2,3};
+        System.out.println(l);
+        ListNode head = ListNode.fromArray(l);
+        //System.out.println(head.toString());
+        ListNode p = head;
+        while (p != null) {
+            System.out.println(p.val);
+            p = p.next;
+        }
+        p = Main.reverse(head);
+        //System.out.println(head.toString());
+        while (p != null) {
+            System.out.println(p.val);
+            p = p.next;
+        }
     }
 }
