@@ -14,30 +14,27 @@ class CourseSchedule {
         for (int[] p: prerequisites) 
             l.get(p[0]).add(p[1]);
 
-        Set<Integer> skip = new HashSet<>();
+        int[] status = new int[l.size()];
         for (int i = 0; i < l.size(); i ++) {
-            if (skip.contains(i))
+            if (status[i] == 1)
                 continue;
-            skip.add(i);
-            Set<Integer> visited = new HashSet<>();
-            if (!dfs(l, i, skip, visited))
+            if (!dfs(l, i, status))
                 return false;
         }
         return true;
     }
-    private static boolean dfs(List<List<Integer>> l, int i,
-            Set<Integer> skip, Set<Integer> visited) {
-        if (visited.contains(i))
+    private static boolean dfs(List<List<Integer>> l, int i, int[] status) {
+        if (status[i] == -1)
             return false;
-        visited.add(i);
+        status[i] = -1;
         List<Integer> ll = l.get(i);
         for (int ii: ll) {
-            if (skip.contains(ii))
+            if (status[ii] == 1)
                 continue;
-            skip.add(ii);
-            if (!dfs(l, ii, skip, visited))
+            if (!dfs(l, ii, status))
                 return false;
         }
+        status[i] = 1;
         return true;
     }
 
