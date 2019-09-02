@@ -17,7 +17,28 @@ Explanation: Because the new interval [4,8] overlaps with [3,5],[6,7],[8,10].
 */
 class InsertInterval {
     public int[][] insert(int[][] intervals, int[] newInterval) {
+        List<int[]> res = new ArrayList<>();
+        if (intervals.length == 0) {
+            res.add(newInterval);
+        } else {
         int[] range = find(intervals, newInterval);
+        if (range[0] == -1) {
+            if (range[1] == intervals.length)
+                res.add(newInterval);
+            else {
+                int[] tmp = new int[2];
+                tmp[0] = newInterval[0];
+                tmp[1] = intervals[range[1]][1];
+                res.add(tmp);
+                //  add rest of intervals
+            }
+        } else {
+            if (range[1] == range[0]) {
+                return intervals;
+            }
+        }
+        }
+        return res.toArray();
     }
 
     private int[] find(int[][] intervals, int[] newInterval) {
@@ -30,12 +51,15 @@ class InsertInterval {
             if (intervals[i][0] >= newInterval[0])
                 break;
         }
+        i -= 1;
         res[0] = i;
         for (; i < intervals.length; i ++) {
-            if (intervals[i][1] > newInterval[1])
+            if (i < 0)
+                continue;
+            if (intervals[i][1] >= newInterval[1])
                 break;
         }
-        res[1] = i - 1;
+        res[1] = i;
         return res;
     }
 }
