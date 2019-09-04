@@ -26,53 +26,26 @@ class InsertInterval {
             return res.toArray(new int[0][0]);
         }
         int[] range = find(intervals, newInterval);
-        if (range[0] == -1) {
-            if (range[1] == intervals.length)
-                res.add(newInterval);
-            else {
-                int[] tmp = new int[2];
-                tmp[0] = newInterval[0];
-                tmp[1] = intervals[range[1]][1];
-                res.add(tmp);
-                for (int i = range[1] + 1; i < intervals.length; i ++)
-                    res.add(intervals[i]);
+        int idx1 = range[0], idx2 = range[1], s = newInterval[0], e = newInterval[1];
+        System.out.printf("idx1: %d, idx2: %d\n", idx1, idx2);
+        if (idx1 >= 0) {
+            if (intervals[idx1][1] >= s) {
+                s = intervals[idx1][0];
+                idx1--;
             }
-        } else if (range[1] == range[0]) {
-            return intervals;
-        } else if (newInterval[1] < intervals[range[1]][0] && newInterval[0] > intervals[range[0]][1]) {
-            for (int i = 0; i <= range[0]; i ++)
-                res.add(intervals[i]);
-            res.add(newInterval);
-            for (int i = range[1]; i < intervals.length; i ++)
-                res.add(intervals[i]);
-        } else if (newInterval[0] > intervals[range[0]][1]) {
-            for (int i = 0; i <= range[0]; i ++)
-                res.add(intervals[i]);
-            int[] tmp = new int[2];
-            tmp[0] = newInterval[0];
-            tmp[1] = intervals[range[1]][1];
-            res.add(tmp);
-            for (int i = range[1] + 1; i < intervals.length; i ++)
-                res.add(intervals[i]);
-        } else if (newInterval[1] < intervals[range[1]][0]) {
-            for (int i = 0; i < range[0]; i ++)
-                res.add(intervals[i]);
-            int[] tmp = new int[2];
-            tmp[0] = intervals[range[0]][0];
-            tmp[1] = newInterval[1];
-            res.add(tmp);
-            for (int i = range[1]; i < intervals.length; i ++)
-                res.add(intervals[i]);
-        } else {
-            for (int i = 0; i < range[0]; i ++)
-                res.add(intervals[i]);
-            int[] tmp = new int[2];
-            tmp[0] = intervals[range[0]][0];
-            tmp[1] = intervals[range[1]][1];
-            res.add(tmp);
-            for (int i = range[1] + 1; i < intervals.length; i ++)
-                res.add(intervals[i]);
         }
+        if (idx2 < intervals.length) {
+            if (intervals[idx2][0] <= e) {
+                e = intervals[idx2][1];
+                idx2++;
+            }
+        }
+        for (int i = 0; i <= idx1; i ++)
+            res.add(intervals[i]);
+        res.add(new int[] {s, e});
+        for (int i = idx2; i < intervals.length; i ++)
+            res.add(intervals[i]);
+
         return res.toArray(new int[0][0]);
     }
 
@@ -104,7 +77,9 @@ class InsertInterval {
         //Output: [[1,5],[6,9]]
         //int[][] intervals = new int[][] {{1,2},{3,5},{6,7},{8,10},{12,16}}; int[] newInterval = new int[] {4,8};
         //Output: [[1,2],[3,10],[12,16]]
-        int[][] intervals = new int[][] {{1,5}}; int[] newInterval = new int[] {2,7};
+        //int[][] intervals = new int[][] {{1,5}}; int[] newInterval = new int[] {2,7};
+        //Output: [[1,7]]
+        int[][] intervals = new int[][] {{1,5}}; int[] newInterval = new int[] {5,7};
         //Output: [[1,7]]
         int[][] res = s.insert(intervals, newInterval);
         System.out.println(Arrays.deepToString(res));
