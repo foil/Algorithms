@@ -6,6 +6,8 @@ import java.util.Collections;
 import java.util.List;
 
 public class AmazonTest {
+    private final static String id = "23280666465968";
+
     ArrayList<Integer> IDsOfPackages(int truckSpace,
                                      ArrayList<Integer> packagesSpace)
     {
@@ -82,13 +84,97 @@ public class AmazonTest {
         return -1;
     }
 
+    int numberAmazonGoStores(int rows, int column, List<List<Integer> > grid)
+    {
+        // WRITE YOUR CODE HERE
+        int count = 0;
+        for (int r = 0; r < rows; r ++) {
+            for (int c = 0; c < column; c ++) {
+                count += dfs(r, c, rows, column, grid);
+            }
+        }
+        return count;
+    }
+    private int dfs(int r, int c, int rows, int column, List<List<Integer>> grid) {
+        if (r < 0 || r >= rows || c < 0 || c >= column)
+            return 0;
+        int v = grid.get(r).get(c);
+        if (v == 1) {
+            grid.get(r).set(c, 0);
+            dfs(r + 1, c, rows, column, grid);
+            dfs(r - 1, c, rows, column, grid);
+            dfs(r, c + 1, rows, column, grid);
+            dfs(r, c - 1, rows, column, grid);
+            return 1;
+        }
+        return 0;
+    }
+
+    int minimumDays(int rows, int columns, List<List<Integer> > grid)
+    {
+        // WRITE YOUR CODE HERE
+        boolean none = true;
+        for (int r = 0; r < rows; r ++) {
+            for (int c = 0; c < columns; c++) {
+                if (grid.get(r).get(c) == 1) {
+                    none = false;
+                    break;
+                }
+            }
+        }
+        if (none)
+            return -1;
+
+        boolean[][] tags = new boolean[rows][columns];
+        int days = 0;
+        for (;; days++) {
+            for (int r = 0; r < rows; r ++) {
+                System.out.println(grid.get(r));
+            }
+            System.out.println();
+
+            boolean done = true;
+            for (int r = 0; r < rows; r ++) {
+                for (int c = 0; c < columns; c++) {
+                    if (grid.get(r).get(c) == 0) {
+                        done = false;
+                        break;
+                    }
+                }
+            }
+            if (done)
+                break;
+
+            for (int r = 0; r < rows; r ++) {
+                for (int c = 0; c < columns; c++)
+                    tags[r][c] = false;
+            }
+            for (int r = 0; r < rows; r ++) {
+                for (int c = 0; c < columns; c ++) {
+                    if (grid.get(r).get(c) == 1 && !tags[r][c]) {
+                        update(r + 1, c, rows, columns, grid, tags);
+                        update(r - 1, c, rows, columns, grid, tags);
+                        update(r, c + 1, rows, columns, grid, tags);
+                        update(r, c - 1, rows, columns, grid, tags);
+                    }
+                }
+            }
+        }
+        return days;
+    }
+    private void update(int r, int c, int rows, int column, List<List<Integer>> grid, boolean[][] tags) {
+        if (r >= 0 && r < rows && c >= 0 && c < column && grid.get(r).get(c) == 0) {
+            grid.get(r).set(c, 1);
+            tags[r][c] = true;
+        }
+    }
+
     public static void main(String[] args) {
         AmazonTest a = new AmazonTest();
-        int[][] lot = new int[][] {
-                {1, 0, 9},
-                {1, 1, 1},
-                {1, 0, 1}
-        };
-        System.out.println(a.removeObstacle(lot));
+        List<List<Integer>> grid = new ArrayList<>();
+        grid.add(Arrays.asList(1,1,1));
+        grid.add(Arrays.asList(1,1,1));
+        grid.add(Arrays.asList(1,1,1));
+        System.out.println(a.minimumDays(3,3,grid));
     }
 }
