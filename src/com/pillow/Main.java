@@ -112,7 +112,34 @@ public class Main {
         stats[i] = 2;
         return true;
     }
+
+    private static String addStrings(String num1, String num2) {
+        int carry = 0;
+        StringBuilder sb = new StringBuilder();
+        for (int i = num1.length() - 1, j = num2.length() - 1; i >= 0 || j >= 0; i --, j --) {
+            int n1 = 0;
+            if (i >= 0)
+                n1 = num1.charAt(i) - '0';
+            int n2 = 0;
+            if (j >= 0)
+                n2 = num2.charAt(j) - '0';
+            int n = n1 + n2 + carry;
+            carry = n >= 10? 1: 0;
+            n %= 10;
+            sb.insert(0, n);
+        }
+        if (carry > 0)
+            sb.insert(0, 1);
+        return sb.toString();
+    }
     public static void main(String args[]) throws Exception {
-        System.out.println(maxProfit(new int[] {1,2,3,0,2}));
+        Twitter twitter = new Twitter();
+        twitter.postTweet(1, 5);
+        twitter.follow(1, 2);
+        twitter.follow(2, 1);
+//        System.out.println(twitter.getNewsFeed(2));
+        twitter.postTweet(2, 6);
+//        System.out.println(twitter.getNewsFeed(1));
+        System.out.println(twitter.getNewsFeed(2));
     }
 }
