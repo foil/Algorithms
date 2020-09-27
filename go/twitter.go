@@ -1,33 +1,28 @@
 package main
 
-import "fmt"
-
 type Twitter struct {
-	userTweets	map[int][]int
-	userFollows	map[int]map[int]bool
-	tweets	map[int]int
-	count	int
+	userTweets  map[int][]int
+	userFollows map[int]map[int]bool
+	tweets      map[int]int
+	count       int
 }
-
 
 /** Initialize your data structure here. */
 func Constructor() Twitter {
 	return Twitter{
-		count: 0,
-		userTweets: map[int][]int{},
+		count:       0,
+		userTweets:  map[int][]int{},
 		userFollows: map[int]map[int]bool{},
-		tweets: map[int]int{},
+		tweets:      map[int]int{},
 	}
 }
 
-
 /** Compose a new tweet. */
-func (this *Twitter) PostTweet(userId int, tweetId int)  {
+func (this *Twitter) PostTweet(userId int, tweetId int) {
 	this.tweets[tweetId] = this.count
 	this.count += 1
 	this.userTweets[userId] = append(this.userTweets[userId], tweetId)
 }
-
 
 /** Retrieve the 10 most recent tweet ids in the user's news feed. Each item in the news feed must be posted by users who the user followed or by the user herself. Tweets must be ordered from most recent to least recent. */
 func (this *Twitter) GetNewsFeed(userId int) []int {
@@ -74,9 +69,8 @@ func (this *Twitter) GetNewsFeed(userId int) []int {
 	return res
 }
 
-
 /** Follower follows a followee. If the operation is invalid, it should be a no-op. */
-func (this *Twitter) Follow(followerId int, followeeId int)  {
+func (this *Twitter) Follow(followerId int, followeeId int) {
 	if _, has := this.userFollows[followerId]; !has {
 		this.userFollows[followerId] = map[int]bool{}
 	}
@@ -85,16 +79,14 @@ func (this *Twitter) Follow(followerId int, followeeId int)  {
 	}
 }
 
-
 /** Follower unfollows a followee. If the operation is invalid, it should be a no-op. */
-func (this *Twitter) Unfollow(followerId int, followeeId int)  {
+func (this *Twitter) Unfollow(followerId int, followeeId int) {
 	if _, has := this.userFollows[followerId]; has {
 		if _, exists := this.userFollows[followerId][followeeId]; exists {
 			delete(this.userFollows[followerId], followeeId)
 		}
 	}
 }
-
 
 /**
  * Your Twitter object will be instantiated and called as such:
@@ -105,6 +97,7 @@ func (this *Twitter) Unfollow(followerId int, followeeId int)  {
  * obj.Unfollow(followerId,followeeId);
  */
 
+/**
 func main()  {
 	twitter := Constructor()
 	// User 1 posts a new tweet (id = 5).
@@ -130,3 +123,4 @@ func main()  {
 	// since user 1 is no longer following user 2.
 	fmt.Println(twitter.GetNewsFeed(1))
 }
+*/
